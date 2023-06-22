@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  vproapp
+  namespace: default
+  labels:
+    app:  vproapp
+spec:
+  selector:
+    matchLabels:
+      app: vproapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  vproapp
+    spec:
+      # initContainers:
+        # Init containers are exactly like regular containers, except:
+          # - Init containers always run to completion.
+          # - Each init container must complete successfully before the next one starts.
+      containers:
+      - name:  vproapp
+        image:  vprofile/vprofileapp
+        ports:
+        - containerPort:  8080
+          name:  vproapp-port
+        volumeMounts:
+        - name: localtime
+          mountPath: /etc/localtime
+      initContainers:
+       - name: init-mydb
+         image: busybox
+         command: ['sh', '-c', 'until nslookup vprosb; do echo waiting for mydb; sleep 2; done']
+       - name: init-memcache
+         image: busybox
+         command: ['sh', '-c' , 'until nslookup vprocache01; do echo waiting for mydb; sleep 2; done']
+      restartPolicy: Always
