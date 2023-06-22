@@ -5,7 +5,7 @@ metadata:
   labels:
     name:  vpromq01
 spec:
-  selector: vpromq01
+  selector:
    matchLabels:
     app: vpromq01
   replicas: 1
@@ -15,7 +15,7 @@ spec:
         name:  vpromq01
     spec:
      containers:
-       - image:  rabbidmq
+       - image:  rabbitmq
          name:  vpromq01
          ports:
          - containerPort: 15672
