@@ -8,22 +8,24 @@ spec:
   selector: 
    matchLabels:
     app: vpromq01
+  replicas: 1
   template:
     metadata:
       labels:
         name:  vpromq01
-    containers:
-      - image:  rabbidmq
-        name:  vpromq01
-        ports:
-        - containerPort: 15672
-          name:  vpromq01
-        env:
-         - name: RABBITMQ_DEFAULT_PASS
-           valueFrom:
-            secretKeyRef:
-              name: app-secret
-              key: rmq-pass
-         - name: RABBITMQ_DEFAULT_USER
-           value: "guest"
+    spec:
+     containers:
+       - image:  rabbidmq
+         name:  vpromq01
+         ports:
+         - containerPort: 15672
+           name:  vpromq01
+         env:
+          - name: RABBITMQ_DEFAULT_PASS
+            valueFrom:
+             secretKeyRef:
+               name: app-secret
+               key: rmq-pass
+          - name: RABBITMQ_DEFAULT_USER
+            value: "guest"
                         
