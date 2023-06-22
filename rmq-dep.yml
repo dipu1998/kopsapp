@@ -12,8 +12,8 @@ spec:
     metadata:
       labels:
         name:  vpromq01
-    spec:
-      containers:
+  spec:
+    containers:
       - image:  rabbidmq
         name:  vpromq01
         ports:
